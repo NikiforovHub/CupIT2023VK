@@ -42,8 +42,9 @@ https://github.com/NikiforovHub/CupIT2023VK/blob/main/CupIT2023-DS-32%20Bits%20o
 
 ## Модели ранжирования текста
 
-Последовательность построения модели следующая: 
-1.  Ранжировали комментарии при помощи нескольких методов. 
+Последовательность построения модели следующая:
+
+1. Ранжировали комментарии при помощи нескольких методов. 
 2. Модели валидировались путём разбиения тренировочного датасета на обучающую и валидационную части.
 3. Выбрали модели с наибольшей целевой метрикой (NDCG).
 
@@ -57,34 +58,36 @@ LinearDiscriminantAnalysis (LDA), многослойный перцептрон 
 
 ![image](https://github.com/NikiforovHub/CupIT2023VK/assets/14981310/017b731b-1b18-43f5-9aeb-8abe0741f3e1)
 
+Второй подход: извлечение трансформерных эмбеддингов, затем применение модели.
 
+Для извлечения эмбеддингов из комментариев использовалась модель paraphrase-MiniLM-L6-v2.Затем на полученных эмбеддингах были применены модели kNN и RidgeClassifier.
 
+Величину метрики NDCG данных моделей и сравнение с предыдущими моделями можно увидеть на столбчатой диаграмме ниже
 
+![image](https://github.com/NikiforovHub/CupIT2023VK/assets/14981310/1ab6991b-c6ec-4f01-9a01-df12e948afe5)
 
+## Модели ранжирования текста
 
+Отдельно отметим, что при прямом использовании методов машинного обучения получалось, что комментарии ранжировались сквозным методом, то есть комментарии одного поста могли, например, получить одинаковые ранги.
+ 
+Поэтому для ранжирования комментариев конечная модель применялась следующим образом:
 
+Для выбранного поста рассчитывались ранги и вероятности принадлежности к рангу для каждого комментария
+Находилось математическое ожидание ранга каждого комментария
+Комментарии ранжировались в порядке полученного математического ожидания
 
+<b>Итоговое значение метрики NDCG для лучшей модели равно 0.7.</b>
 
+Блокнот с предсказанием для тестового датасета  
+[https://github.com/Bugdol/VK/blob/main/cl-cup-it-2023-inference-test.ipynb](https://github.com/NikiforovHub/CupIT2023VK/blob/main/cl-cup-it-2023-inference-test.ipynb)
 
+## Приложение
 
+ZIP-файл с предсказаниями  
+https://github.com/NikiforovHub/CupIT2023VK/blob/main/submit.zip
 
-
-
-test.json lines
-
-https://github.com/Bugdol/VK/blob/main/submit.zip 
-
-Блокнот с предсказанием тестового датасета
-
-https://github.com/Bugdol/VK/blob/main/cl-cup-it-2023-inference-test.ipynb
-
-
-Проверка разных моделей
-
-
-https://github.com/Bugdol/VK/blob/main/cl-cup-it-2023-base.ipynb
-
-
+Проверка разных моделей  
+[https://github.com/Bugdol/VK/blob/main/cl-cup-it-2023-base.ipynb](https://github.com/NikiforovHub/CupIT2023VK/blob/main/cl-cup-it-2023-base.ipynb)
 
 Очищенный train_data: https://drive.google.com/file/d/1-yLUT_l0D7hwbHzx5nbIK2iihu5-Tv_g/view?usp=sharing
 Очищенный test_data: https://drive.google.com/file/d/1NvuUGNDrGPE7mhvufP6pQbouxiEJkxj7/view?usp=sharing
